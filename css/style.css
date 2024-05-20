@@ -4,8 +4,8 @@
     align-items: center;
 }
 .game_board{
-    width: 600px;
-    height: 600px;
+    width: 650px;
+    height: 650px;
     border: 2px solid black;
     display: flex;
     justify-content: center;
