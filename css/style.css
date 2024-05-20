@@ -17,3 +17,10 @@
     height: 50px;
     background-color: rgb(53, 53, 53);
 }
+.game_over{
+    z-index: 1;
+    color: rgb(204, 0, 0);
+    border-radius: 2px;
+    font-size: 100px;
+    display: none;
+}
