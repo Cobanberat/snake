@@ -1,0 +1,19 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.game_board{
+    width: 600px;
+    height: 600px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.snake{
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(53, 53, 53);
+}
