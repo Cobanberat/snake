@@ -24,3 +24,8 @@
     font-size: 100px;
     display: none;
 }
+.refresh_button{
+    z-index: 2;
+    display: none;
+    margin-top: 100px;
+}

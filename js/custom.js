@@ -18,7 +18,13 @@ $(document).ready(function () {
                 snakeLocation?.y <= ustDuvar ||
                 snakeLocation?.x + snakeLocation?.width >= sagDuvar ||
                 snakeLocation?.y + snakeLocation?.height >= altDuvar
+                
+                
             ) {
+                $(".game_over").css({ display: "block" });
+                $(".refresh_button").css({ display: "block" });
+
+
                 clearInterval(hareketAraligi);
             } else if (hareketYonu === "ArrowRight" && yon === "ArrowLeft" || hareketYonu === "ArrowLeft" && yon === "ArrowRight" || hareketYonu === "ArrowUp" && yon === "ArrowDown" || hareketYonu === "ArrowDown" && yon === "ArrowUp"  ) {
                 $(".game_over").css({ display: "block" });
@@ -44,3 +50,6 @@ $(document).ready(function () {
         }
     });
 });
+function refresh(){
+    window.location.reload()
+}
