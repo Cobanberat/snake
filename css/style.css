@@ -31,12 +31,12 @@
 
 .game_board {
     position: relative;
-    width: 691px;
-    height: 691px;
+    width: 497px;
+    height: 497px;
     margin: 0 auto;
-    background-image: linear-gradient(0deg, transparent 29px, #000 30px),
-        linear-gradient(90deg, transparent 29px, #000 30px);
-    background-size: 30px 30px;
+    background-image: linear-gradient(0deg, transparent 14px, #ffffff 15px),
+        linear-gradient(90deg, transparent 14px, #ffffff 15px);
+    background-size: 15px 15px;
     overflow: hidden;
     border: 1px solid;
     display: flex;
@@ -46,8 +46,8 @@
 
 .snake {
     position: absolute;
-    width: 30px;
-    height: 30px;
+    width: 15px;
+    height: 15px;
     background-color: green;
 }
 
@@ -61,11 +61,26 @@
     align-items: center;
 }
 
-.game_over span {
+.game_over .game_over_text {
     font-size: 2em;
     color: red;
+}
+.game_over .skor {
+    font-size: 2em;
+    color: rgb(0, 0, 0);
 }
 
 .refresh_button {
     margin-top: 20px;
+    width: 140px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.yem {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(231, 82, 8);
 }
