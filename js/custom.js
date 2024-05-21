@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var hareketAraligi = null;
     var hareketYonu = null;
+    $(".game_over").hide();
+    $(".refresh_button").hide();
 
     function hareketiBaslat(yon) {
         if (hareketAraligi) {
@@ -18,38 +20,38 @@ $(document).ready(function () {
                 snakeLocation?.y <= ustDuvar ||
                 snakeLocation?.x + snakeLocation?.width >= sagDuvar ||
                 snakeLocation?.y + snakeLocation?.height >= altDuvar
-                
-                
             ) {
-                $(".game_over").css({ display: "block" });
-                $(".refresh_button").css({ display: "block" });
-
-
+                $(".game_over").show();
+                $(".refresh_button").show();
                 clearInterval(hareketAraligi);
-            } else if (hareketYonu === "ArrowRight" && yon === "ArrowLeft" || hareketYonu === "ArrowLeft" && yon === "ArrowRight" || hareketYonu === "ArrowUp" && yon === "ArrowDown" || hareketYonu === "ArrowDown" && yon === "ArrowUp"  ) {
-                $(".game_over").css({ display: "block" });
-                return;
-            } else if (yon === "ArrowLeft") {
-                $(".snake").animate({ left: "-=50px" }, 200);
-            } else if (yon === "ArrowUp") {
-                $(".snake").animate({ top: "-=50px" }, 200);
-            } else if (yon === "ArrowRight") {
-                $(".snake").animate({ left: "+=50px" }, 200);
-            } else if (yon === "ArrowDown") {
-                $(".snake").animate({ top: "+=50px" }, 200);
+            } else {
+                if (yon === 37) { // Sol
+                    $(".snake").animate({ left: "-=30px" }, 100);
+                } else if (yon === 38) { // Yukarı
+                    $(".snake").animate({ top: "-=30px" }, 100);
+                } else if (yon === 39) { // Sağ
+                    $(".snake").animate({ left: "+=30px" }, 100);
+                } else if (yon === 40) { // Aşağı
+                    $(".snake").animate({ top: "+=30px" }, 100);
+                }
             }
             hareketYonu = yon;
-        }, 300)
+        }, 140);
     }
 
-
-
     document.addEventListener("keydown", function (e) {
-        if (["ArrowLeft", "ArrowUp", "ArrowRight", "ArrowDown"].includes(e.key) && hareketYonu !== e.key) {
-            hareketiBaslat(e.key);
+        const tersYonuKontrol = {
+            37: 39, // Sol -> Sağ
+            38: 40, // Yukarı -> Aşağı
+            39: 37, // Sağ -> Sol
+            40: 38  // Aşağı -> Yukarı
+        };
+        if ([37, 38, 39, 40].includes(e.keyCode) && tersYonuKontrol[hareketYonu] !== e.keyCode) {
+            hareketiBaslat(e.keyCode);
         }
     });
 });
-function refresh(){
-    window.location.reload()
+
+function refresh() {
+    window.location.reload();
 }

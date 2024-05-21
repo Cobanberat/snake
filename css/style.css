@@ -1,31 +1,71 @@
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.game_board{
-    width: 650px;
-    height: 650px;
-    border: 2px solid black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.snake{
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(53, 53, 53);
-}
-.game_over{
+
+.game_over {
     z-index: 1;
     color: rgb(204, 0, 0);
     border-radius: 2px;
-    font-size: 100px;
     display: none;
+    flex-direction: column;
 }
-.refresh_button{
+
+.refresh_button {
     z-index: 2;
     display: none;
-    margin-top: 100px;
+    border: none;
+    background-color: gainsboro;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+.refresh_button:hover {
+    background-color: rgb(198, 198, 198);
+}
+
+.game_over span {
+    font-size: 100px;
+}
+
+.game_board {
+    position: relative;
+    width: 691px;
+    height: 691px;
+    margin: 0 auto;
+    background-image: linear-gradient(0deg, transparent 29px, #000 30px),
+        linear-gradient(90deg, transparent 29px, #000 30px);
+    background-size: 30px 30px;
+    overflow: hidden;
+    border: 1px solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.snake {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: green;
+}
+
+.game_over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game_over span {
+    font-size: 2em;
+    color: red;
+}
+
+.refresh_button {
+    margin-top: 20px;
 }
