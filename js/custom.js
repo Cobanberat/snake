@@ -42,6 +42,7 @@ $(document).ready(function () {
             ) {
                 $(".game_over").show();
                 $(".refresh_button").show();
+                $(".yem").hide();
                 clearInterval(hareketAraligi);
             } else {
                 if (yon === 37) { // Sol
@@ -88,9 +89,11 @@ $(document).ready(function () {
 
     rastgeleKonumBelirle($(".yem")); 
     $(".skor").text(skor); 
+
+    
+    
 });
 
 function refresh() {
     window.location.reload();
-    skor = 0;
 }
