@@ -1,15 +1,15 @@
 $(document).ready(function () {
-    var hareketAraligi = null;
     var hareketYonu = null;
     var skor = 0;
     var hiz = 80;
     var function_hiz = 100;
+    var hareketEdiyor = false;
     $(".game_over").hide();
     $(".refresh_button").hide();
+    $(".skor").show();
 
     function rastgeleKonumBelirle(element) {
         const gameBoard = $(".game_board")[0].getBoundingClientRect();
-
         const maxX = Math.floor((gameBoard.width - element.width()) / 15);
         const maxY = Math.floor((gameBoard.height - element.height()) / 15);
         const x = Math.floor(Math.random() * (maxX + 1)) * 15;
@@ -17,12 +17,16 @@ $(document).ready(function () {
         element.css({ left: x + 'px', top: y + 'px' });
     }
 
-    function hareketiBaslat(yon) {
-        if (hareketAraligi) {
-            clearInterval(hareketAraligi);
-        }
-        hareketAraligi = setInterval(function () {
-            $(".start").hide();
+    function hareketiBaslat() {
+        if (hareketEdiyor) return;
+        hareketEdiyor = true;
+
+        function hareket() {
+            if (!hareketYonu) {
+                hareketEdiyor = false;
+                return;
+            }
+
             const snake = $(".snake");
             const snakeLocation = snake[0].getBoundingClientRect();
             const gameBoard = $(".game_board")[0].getBoundingClientRect();
@@ -45,15 +49,16 @@ $(document).ready(function () {
                 $(".refresh_button").show();
                 $(".yem").hide();
                 $(".start").hide();
-                clearInterval(hareketAraligi);
+                hareketEdiyor = false;
+                return;
             } else {
-                if (yon === 37) { // Sol
+                if (hareketYonu === 37) { // Sol
                     snake.animate({ left: "-=15px" }, hiz);
-                } else if (yon === 38) { // Yukarı
+                } else if (hareketYonu === 38) { // Yukarı
                     snake.animate({ top: "-=15px" }, hiz);
-                } else if (yon === 39) { // Sağ
+                } else if (hareketYonu === 39) { // Sağ
                     snake.animate({ left: "+=15px" }, hiz);
-                } else if (yon === 40) { // Aşağı
+                } else if (hareketYonu === 40) { // Aşağı
                     snake.animate({ top: "+=15px" }, hiz);
                 }
             }
@@ -65,16 +70,20 @@ $(document).ready(function () {
                 snakeLocation.y + snakeLocation.height > yemLocation.y
             ) {
                 rastgeleKonumBelirle(yem);
-                skor = skor + 1;
+                skor++;
                 $(".skor").text(skor);  
-                if(skor == 2 || skor == 7 || skor == 10 || skor == 20 || skor == 30){
-                    hiz = hiz - 15;
-                    function_hiz = function_hiz - 15;
+                if ([2, 7, 10, 20, 30].includes(skor)) {
+                    hiz = Math.max(10, hiz - 15);
+                    function_hiz = Math.max(10, function_hiz - 15);
                 }
             }
 
-            hareketYonu = yon;
-        }, function_hiz);
+            setTimeout(function() {
+                requestAnimationFrame(hareket);
+            }, function_hiz);
+        }
+
+        hareket();
     }
 
     document.addEventListener("keydown", function (e) {
@@ -85,18 +94,15 @@ $(document).ready(function () {
             40: 38  // Aşağı -> Yukarı
         };
         if ([37, 38, 39, 40].includes(e.keyCode) && tersYonuKontrol[hareketYonu] !== e.keyCode) {
-            hareketiBaslat(e.keyCode);
+            hareketYonu = e.keyCode;
+            hareketiBaslat();
         }
     });
 
     rastgeleKonumBelirle($(".yem")); 
     $(".skor").text(skor); 
-
-
-
 });
 
 function refresh() {
     window.location.reload();
 }
-    

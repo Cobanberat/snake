@@ -1,9 +1,19 @@
 .container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+.body{
+    background-color: #222738;
+    color: #6e7888;
+}
+.sag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
+
 
 .game_over {
     z-index: 1;
@@ -35,21 +45,28 @@
     width: 497px;
     height: 497px;
     margin: 0 auto;
-    background-image: linear-gradient(0deg, transparent 14px, #ffffff 15px),
-        linear-gradient(90deg, transparent 14px, #ffffff 15px);
+    background-image: linear-gradient(0deg, transparent 14px, #222738 15px),
+        linear-gradient(90deg, transparent 14px, #222738 15px);
     background-size: 15px 15px;
     overflow: hidden;
-    border: 1px solid;
+    border: 1px solid #222738;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #181825;
 }
 
 .snake {
     position: absolute;
     width: 15px;
     height: 15px;
-    background-color: green;
+    background: #0f0; 
+    box-shadow: 
+    0 0 5px #0f0,
+    0 0 10px #0f0,
+    0 0 20px #0f0,
+    0 0 40px #0f0,
+    0 0 80px #0f0;
 }
 
 .game_over {
@@ -83,5 +100,34 @@
     position: absolute;
     width: 15px;
     height: 15px;
-    background-color: rgb(231, 82, 8);
+    background: #f90; 
+    box-shadow: 
+    0 0 5px #f90,
+    0 0 10px #f90,
+    0 0 20px #f90,
+    0 0 40px #f90,
+    0 0 80px #f90;
 }
+#ui {
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+    flex-flow: column;
+    margin-left: 10px;
+    height: 200px;
+    justify-content: space-around;
+    color: #6e7888;
+  }
+  .score_text {
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: 8px;
+    margin-bottom: 30px;
+    transform: rotate(270deg);
+  }
+  #score {
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    transform: rotate(-90deg);
+  }
