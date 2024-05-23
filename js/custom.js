@@ -22,6 +22,7 @@ $(document).ready(function () {
             clearInterval(hareketAraligi);
         }
         hareketAraligi = setInterval(function () {
+            $(".start").hide();
             const snake = $(".snake");
             const snakeLocation = snake[0].getBoundingClientRect();
             const gameBoard = $(".game_board")[0].getBoundingClientRect();
@@ -43,6 +44,7 @@ $(document).ready(function () {
                 $(".game_over").show();
                 $(".refresh_button").show();
                 $(".yem").hide();
+                $(".start").hide();
                 clearInterval(hareketAraligi);
             } else {
                 if (yon === 37) { // Sol
@@ -65,7 +67,7 @@ $(document).ready(function () {
                 rastgeleKonumBelirle(yem);
                 skor = skor + 1;
                 $(".skor").text(skor);  
-                if(skor == 2 || skor == 7 || skor == 10 || skor == 20 || skor == 40){
+                if(skor == 2 || skor == 7 || skor == 10 || skor == 20 || skor == 30){
                     hiz = hiz - 15;
                     function_hiz = function_hiz - 15;
                 }
@@ -90,10 +92,11 @@ $(document).ready(function () {
     rastgeleKonumBelirle($(".yem")); 
     $(".skor").text(skor); 
 
-    
-    
+
+
 });
 
 function refresh() {
     window.location.reload();
 }
+    
