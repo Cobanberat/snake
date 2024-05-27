@@ -17,6 +17,11 @@ $(document).ready(function () {
         element.css({ left: x + 'px', top: y + 'px' });
     }
 
+    function segmentEkle() {
+        const yeniSegment = $("<div class='snake'></div>");
+        $(".game_board").append(yeniSegment);
+    }
+
     function hareketiBaslat() {
         if (hareketEdiyor) return;
         hareketEdiyor = true;
@@ -27,23 +32,25 @@ $(document).ready(function () {
                 return;
             }
 
-            const snake = $(".snake");
-            const snakeLocation = snake[0].getBoundingClientRect();
+            const yilanSegmentleri = $(".snake");
             const gameBoard = $(".game_board")[0].getBoundingClientRect();
-
             const yem = $(".yem");
-            const yemLocation = yem[0].getBoundingClientRect();
+            const yemKonumu = yem[0].getBoundingClientRect();
 
             const solDuvar = gameBoard.x;
             const sagDuvar = gameBoard.x + gameBoard.width;
             const ustDuvar = gameBoard.y;
             const altDuvar = gameBoard.y + gameBoard.height;
 
+            // Duvarlarla çarpışma kontrolü
+            const basSegment = $(yilanSegmentleri[0]);
+            const basKonumu = basSegment[0].getBoundingClientRect();
+
             if (
-                snakeLocation.x <= solDuvar ||
-                snakeLocation.y <= ustDuvar ||
-                snakeLocation.x + snakeLocation.width >= sagDuvar ||
-                snakeLocation.y + snakeLocation.height >= altDuvar
+                basKonumu.x <= solDuvar ||
+                basKonumu.y <= ustDuvar ||
+                basKonumu.x + basKonumu.width >= sagDuvar ||
+                basKonumu.y + basKonumu.height >= altDuvar
             ) {
                 $(".game_over").show();
                 $(".refresh_button").show();
@@ -51,30 +58,41 @@ $(document).ready(function () {
                 $(".start").hide();
                 hareketEdiyor = false;
                 return;
-            } else {
-                if (hareketYonu === 37) { // Sol
-                    snake.animate({ left: "-=15px" }, hiz);
-                } else if (hareketYonu === 38) { // Yukarı
-                    snake.animate({ top: "-=15px" }, hiz);
-                } else if (hareketYonu === 39) { // Sağ
-                    snake.animate({ left: "+=15px" }, hiz);
-                } else if (hareketYonu === 40) { // Aşağı
-                    snake.animate({ top: "+=15px" }, hiz);
-                }
             }
 
+            // Yılan segmentlerini hareket ettir
+            for (let i = yilanSegmentleri.length - 1; i > 0; i--) {
+                $(yilanSegmentleri[i]).css({
+                    left: $(yilanSegmentleri[i - 1]).css('left'),
+                    top: $(yilanSegmentleri[i - 1]).css('top')
+                });
+            }
+
+            // Yılanın başını hareket ettir
+            if (hareketYonu === 37) { // Sol
+                basSegment.css({ left: "-=15px" });
+            } else if (hareketYonu === 38) { // Yukarı
+                basSegment.css({ top: "-=15px" });
+            } else if (hareketYonu === 39) { // Sağ
+                basSegment.css({ left: "+=15px" });
+            } else if (hareketYonu === 40) { // Aşağı
+                basSegment.css({ top: "+=15px" });
+            }
+
+            // Yem ile çarpışma kontrolü
             if (
-                snakeLocation.x < yemLocation.x + yemLocation.width &&
-                snakeLocation.x + snakeLocation.width > yemLocation.x &&
-                snakeLocation.y < yemLocation.y + yemLocation.height &&
-                snakeLocation.y + snakeLocation.height > yemLocation.y
+                basKonumu.x < yemKonumu.x + yemKonumu.width &&
+                basKonumu.x + basKonumu.width > yemKonumu.x &&
+                basKonumu.y < yemKonumu.y + yemKonumu.height &&
+                basKonumu.y + basKonumu.height > yemKonumu.y
             ) {
                 rastgeleKonumBelirle(yem);
                 skor++;
-                $(".skor").text(skor);  
-                if ([2, 7, 10, 20, 30].includes(skor)) {
-                    hiz = Math.max(10, hiz - 15);
-                    function_hiz = Math.max(10, function_hiz - 15);
+                $(".skor").text(skor);
+                segmentEkle();
+                if ([2, 4, 6, 8, 10, 15, 20, 25, 30, 35, 40, 50].includes(skor)) {
+                    hiz = Math.max(10, hiz - 10);
+                    function_hiz = Math.max(10, function_hiz - 10);
                 }
             }
 
@@ -83,6 +101,7 @@ $(document).ready(function () {
             }, function_hiz);
         }
 
+        $(".start").hide();
         hareket();
     }
 
@@ -93,10 +112,6 @@ $(document).ready(function () {
             39: 37, // Sağ -> Sol
             40: 38  // Aşağı -> Yukarı
         };
-        if ([37, 38, 39, 40].includes(e.keyCode) && tersYonuKontrol[hareketYonu] !== e.keyCode) {
-            hareketYonu = e.keyCode;
-            hareketiBaslat();
-        }
     });
 
     rastgeleKonumBelirle($(".yem")); 
