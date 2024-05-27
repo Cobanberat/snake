@@ -2,7 +2,6 @@ $(document).ready(function () {
     var hareketYonu = null;
     var skor = 0;
     var hiz = 80;
-    var function_hiz = 100;
     var hareketEdiyor = false;
     $(".game_over").hide();
     $(".refresh_button").hide();
@@ -45,20 +44,6 @@ $(document).ready(function () {
             const basSegment = $(yilanSegmentleri[0]);
             const basKonumu = basSegment[0].getBoundingClientRect();
 
-            if (
-                basKonumu.x <= solDuvar ||
-                basKonumu.y <= ustDuvar ||
-                basKonumu.x + basKonumu.width >= sagDuvar ||
-                basKonumu.y + basKonumu.height >= altDuvar
-            ) {
-                $(".game_over").show();
-                $(".refresh_button").show();
-                $(".yem").hide();
-                $(".start").hide();
-                hareketEdiyor = false;
-                return;
-            }
-
             for (let i = yilanSegmentleri.length - 1; i > 0; i--) {
                 $(yilanSegmentleri[i]).css({
                     left: $(yilanSegmentleri[i - 1]).css('left'),
@@ -76,6 +61,17 @@ $(document).ready(function () {
                 basSegment.css({ top: "+=15px" });
             }
 
+
+            if (basKonumu.left < solDuvar) {
+                basSegment.css({ left: sagDuvar - basKonumu.width });
+            } else if (basKonumu.right > sagDuvar) {
+                basSegment.css({ left: solDuvar });
+            } else if (basKonumu.top < ustDuvar) {
+                basSegment.css({ top: altDuvar - basKonumu.height });
+            } else if (basKonumu.bottom > altDuvar) {
+                basSegment.css({ top: ustDuvar });
+            }
+
             if (
                 basKonumu.x < yemKonumu.x + yemKonumu.width &&
                 basKonumu.x + basKonumu.width > yemKonumu.x &&
@@ -86,12 +82,14 @@ $(document).ready(function () {
                 skor++;
                 $(".skor").text(skor);
                 segmentEkle();
-
             }
+
+            $(".snake").removeClass("head");
+            $(yilanSegmentleri[0]).addClass("head");
 
             setTimeout(function() {
                 requestAnimationFrame(hareket);
-            }, function_hiz);
+            }, hiz);
         }
 
         $(".start").hide();
