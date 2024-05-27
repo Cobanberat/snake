@@ -1,10 +1,9 @@
 $(document).ready(function () {
     var hareketYonu = null;
     var skor = 0;
-    var hiz = 80;
+    var hiz = 50;
     var hareketEdiyor = false;
-    $(".game_over").hide();
-    $(".refresh_button").hide();
+    var requestId;
     $(".skor").show();
 
     function rastgeleKonumBelirle(element) {
@@ -18,31 +17,47 @@ $(document).ready(function () {
 
     function segmentEkle() {
         const yeniSegment = $("<div class='snake'></div>");
-        $(".game_board").append(yeniSegment);
+        $(".game_board .snake").last().after(yeniSegment);
     }
 
     function hareketiBaslat() {
         if (hareketEdiyor) return;
         hareketEdiyor = true;
-
+        
+        
         function hareket() {
+            var game_over_yilan = false;
             if (!hareketYonu) {
                 hareketEdiyor = false;
                 return;
             }
 
             const yilanSegmentleri = $(".snake");
-            const gameBoard = $(".game_board")[0].getBoundingClientRect();
+            const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
             const yem = $(".yem");
             const yemKonumu = yem[0].getBoundingClientRect();
 
-            const solDuvar = gameBoard.x;
-            const sagDuvar = gameBoard.x + gameBoard.width;
-            const ustDuvar = gameBoard.y;
-            const altDuvar = gameBoard.y + gameBoard.height;
-
             const basSegment = $(yilanSegmentleri[0]);
             const basKonumu = basSegment[0].getBoundingClientRect();
+
+            
+            const [yilanBas, ...yilanDiger] = yilanSegmentleri;
+            
+            yilanDiger.forEach(deger => {
+                const {x:yilanBasX,y:yilanBasY} = yilanBas.getBoundingClientRect();
+                const {x:yilanDigerX,y:yilanDigerY}=deger.getBoundingClientRect();
+                if (yilanBasX === yilanDigerX && yilanBasY === yilanDigerY) {
+                    while (--requestId) {
+                        window.cancelAnimationFrame(requestId)
+                    }
+                    game_over_yilan = true;
+                    requestId = undefined;
+                    $(".game_over").show();
+                    $(".snake").hide();
+                    $(".yem").hide();
+                    return;
+                }
+            });
 
             for (let i = yilanSegmentleri.length - 1; i > 0; i--) {
                 $(yilanSegmentleri[i]).css({
@@ -50,6 +65,7 @@ $(document).ready(function () {
                     top: $(yilanSegmentleri[i - 1]).css('top')
                 });
             }
+
 
             if (hareketYonu === 37) { // Sol
                 basSegment.css({ left: "-=15px" });
@@ -62,14 +78,14 @@ $(document).ready(function () {
             }
 
 
-            if (basKonumu.left < solDuvar) {
-                basSegment.css({ left: sagDuvar - basKonumu.width });
-            } else if (basKonumu.right > sagDuvar) {
-                basSegment.css({ left: solDuvar });
-            } else if (basKonumu.top < ustDuvar) {
-                basSegment.css({ top: altDuvar - basKonumu.height });
-            } else if (basKonumu.bottom > altDuvar) {
-                basSegment.css({ top: ustDuvar });
+            if (basKonumu.left < left) {
+                basSegment.css({ left: width - basKonumu.width - 1  });
+            } else if (basKonumu.right > right) {
+                basSegment.css({ left : 0 });
+            } else if (basKonumu.top < top) {
+                basSegment.css({ top: height - basKonumu.height - 1  });
+            } else if (basKonumu.bottom > bottom) {
+                basSegment.css({ top: 0 });
             }
 
             if (
@@ -87,9 +103,11 @@ $(document).ready(function () {
             $(".snake").removeClass("head");
             $(yilanSegmentleri[0]).addClass("head");
 
-            setTimeout(function() {
-                requestAnimationFrame(hareket);
-            }, hiz);
+            if (!game_over_yilan) {
+                setTimeout(function() {
+                    requestId = window.requestAnimationFrame(hareket);
+                }, hiz);
+            }
         }
 
         $(".start").hide();
