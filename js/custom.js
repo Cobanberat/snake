@@ -4,7 +4,6 @@ $(document).ready(function () {
     var hiz = 50;
     var hareketEdiyor = false;
     var requestId;
-    $(".skor").show();
 
     function rastgeleKonumBelirle(element) {
         const gameBoard = $(".game_board")[0].getBoundingClientRect();
@@ -111,6 +110,7 @@ $(document).ready(function () {
         }
 
         $(".start").hide();
+        $("#select_renk").hide();
         hareket();
     }
 
@@ -129,8 +129,32 @@ $(document).ready(function () {
 
     rastgeleKonumBelirle($(".yem")); 
     $(".skor").text(skor); 
+    document.addEventListener("onchange", function (e) {
+
+    })
+    
+    $('#select_renk').on('change', function () {
+        $t = $(this);
+        var deger = $t.val();
+        console.log(deger);
+        if(deger == "1"){
+            $(".snake").css({background : "green"});
+        }
+        if(deger == "2"){
+            $(".snake").css({background : "red"});
+        }
+        if(deger == "3"){
+            $(".snake").css({background : "yellow"});
+        }
+        if(deger == "4"){
+            $(".snake").css({background : "black"});
+        }
+        
+    });
+
 });
 
 function refresh() {
     window.location.reload();
 }
+

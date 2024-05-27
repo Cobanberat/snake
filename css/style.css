@@ -135,3 +135,10 @@
     font-weight: 500;
     transform: rotate(-90deg);
   }
+  #select_renk{
+    border: none;
+    background: #181825;
+    border-radius: 4px;
+    color: rgb(155, 198, 235);
+    width: 70px;
+  }
