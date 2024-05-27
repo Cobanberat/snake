@@ -42,7 +42,6 @@ $(document).ready(function () {
             const ustDuvar = gameBoard.y;
             const altDuvar = gameBoard.y + gameBoard.height;
 
-            // Duvarlarla çarpışma kontrolü
             const basSegment = $(yilanSegmentleri[0]);
             const basKonumu = basSegment[0].getBoundingClientRect();
 
@@ -60,7 +59,6 @@ $(document).ready(function () {
                 return;
             }
 
-            // Yılan segmentlerini hareket ettir
             for (let i = yilanSegmentleri.length - 1; i > 0; i--) {
                 $(yilanSegmentleri[i]).css({
                     left: $(yilanSegmentleri[i - 1]).css('left'),
@@ -68,7 +66,6 @@ $(document).ready(function () {
                 });
             }
 
-            // Yılanın başını hareket ettir
             if (hareketYonu === 37) { // Sol
                 basSegment.css({ left: "-=15px" });
             } else if (hareketYonu === 38) { // Yukarı
@@ -79,7 +76,6 @@ $(document).ready(function () {
                 basSegment.css({ top: "+=15px" });
             }
 
-            // Yem ile çarpışma kontrolü
             if (
                 basKonumu.x < yemKonumu.x + yemKonumu.width &&
                 basKonumu.x + basKonumu.width > yemKonumu.x &&
@@ -90,10 +86,7 @@ $(document).ready(function () {
                 skor++;
                 $(".skor").text(skor);
                 segmentEkle();
-                if ([2, 4, 6, 8, 10, 15, 20, 25, 30, 35, 40, 50].includes(skor)) {
-                    hiz = Math.max(10, hiz - 10);
-                    function_hiz = Math.max(10, function_hiz - 10);
-                }
+
             }
 
             setTimeout(function() {
@@ -112,6 +105,10 @@ $(document).ready(function () {
             39: 37, // Sağ -> Sol
             40: 38  // Aşağı -> Yukarı
         };
+        if ([37, 38, 39, 40].includes(e.keyCode) && tersYonuKontrol[hareketYonu] !== e.keyCode) {
+            hareketYonu = e.keyCode;
+            hareketiBaslat();
+        }
     });
 
     rastgeleKonumBelirle($(".yem")); 
