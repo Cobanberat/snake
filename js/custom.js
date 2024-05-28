@@ -129,16 +129,13 @@ $(document).ready(function () {
 
     rastgeleKonumBelirle($(".yem")); 
     $(".skor").text(skor); 
-    document.addEventListener("onchange", function (e) {
-
-    })
     
     $('#select_renk').on('change', function () {
         $t = $(this);
         var deger = $t.val();
         console.log(deger);
         if(deger == "1"){
-            $(".snake").css({background : "green"});
+            $(".snake").css({background : "#0f0"});
         }
         if(deger == "2"){
             $(".snake").css({background : "red"});
