@@ -16,12 +16,13 @@ $(document).ready(function () {
 
     function segmentEkle() {
         const yeniSegment = $("<div class='snake'></div>");
-        $(".game_board .snake").last().after(yeniSegment);
+        $(".game_board").append(yeniSegment);
     }
 
     function hareketiBaslat() {
         if (hareketEdiyor) return;
         hareketEdiyor = true;
+        $(".yem").show();
         
         
         function hareket() {
@@ -96,6 +97,8 @@ $(document).ready(function () {
                 rastgeleKonumBelirle(yem);
                 skor++;
                 $(".skor").text(skor);
+                $(".start").hide();
+
                 segmentEkle();
             }
 
