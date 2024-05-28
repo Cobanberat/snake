@@ -1,17 +1,29 @@
 $(document).ready(function () {
     var hareketYonu = null;
     hareketEdiyor = false;  
-    yon = null;
+    var snake = $(".snake");
+    var yem = $(".yem");
+
+    function rastgeleYem(element) {
+        const game_board_konum = $(".game_board")[0].getBoundingClientRect();
+        const board = game_board_konum;
+        const x = Math.floor( (board.width - element.width()) / 15);
+        const y = Math.floor( ( board.height - element.height()) /15);
+        const rondomX = Math.floor((Math.random() * (x + 1) )) * 15;
+        const rondomY = Math.floor((Math.random() * (y + 1) )) * 15;
+        element.css({ left: rondomX + 'px', top: rondomY + 'px' });
+
+    }
 
     function hareket() {
         if (hareketYonu === 37) { // Sol
-            $(".snake").css({ left: "-=15px" });
+            snake.css({ left: "-=15px" });
         } else if (hareketYonu === 38) { // Yukarı
-            $(".snake").css({ top: "-=15px" });
+            snake.css({ top: "-=15px" });
         } else if (hareketYonu === 39) { // Sağ
-            $(".snake").css({ left: "+=15px" });
+            snake.css({ left: "+=15px" });
         } else if (hareketYonu === 40) { // Aşağı
-            $(".snake").css({ top: "+=15px" });
+            snake.css({ top: "+=15px" });
         }
             setTimeout(function() {
                 requestAnimationFrame(hareket);
@@ -21,7 +33,10 @@ $(document).ready(function () {
     function hareketiBaslat() {
         if (hareketEdiyor) return;
         hareketEdiyor = true;  
-        hareket();      
+        hareket();
+        yem.show();  
+        rastgeleYem(yem);
+          
     }
 
 
