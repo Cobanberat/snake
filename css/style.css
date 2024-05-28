@@ -60,17 +60,17 @@
     position: absolute;
     width: 15px;
     height: 15px;
-    background: #0f0; 
-
+    background-color: #ffffff;
 }
 .snake.head{
-    background: #0f0; 
+    background: rgb(235, 240, 235); 
     box-shadow: 
-    0 0 5px #0f0,
-    0 0 10px #0f0,
-    0 0 20px #0f0,
-    0 0 40px #0f0,
-    0 0 80px #0f0;
+    0 0 5px rgb(237, 242, 237),
+    0 0 10px rgb(227, 231, 227),
+    0 0 20px rgb(245, 247, 245),
+    0 0 40px rgb(231, 235, 231),
+    0 0 80px rgb(212, 216, 212);
+    border-radius: 10px;
 }
 
 .game_over {
