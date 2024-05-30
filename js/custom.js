@@ -3,6 +3,7 @@ $(document).ready(function () {
     hareketEdiyor = false;  
     var snake = $(".snake");
     var yem = $(".yem");
+    game_over_duvar = null;
     skor = 0;
 
     function rastgeleYem(element) {
@@ -18,17 +19,19 @@ $(document).ready(function () {
     function snakeYem(element) {
         const snakeKonum = snake[0].getBoundingClientRect();
         const yemKonum = element[0].getBoundingClientRect();
-        if(
-            snakeKonum.x == yemKonum.x &&
-             snakeKonum.y == yemKonum.y &&
-            snakeKonum.width == yemKonum.width &&
-             snakeKonum.height == yemKonum.height
+        if( 
+            snakeKonum.x < yemKonum.x + yemKonum.width  &&
+            snakeKonum.x + snakeKonum.width > yemKonum.x &&
+            snakeKonum.y < yemKonum.y + yemKonum.height &&
+            snakeKonum.y + snakeKonum.height > yemKonum.y
         ){
             rastgeleYem(element);
             skor++;
             $(".skor").text(skor);
         }  
     }
+
+    
     
 
     function hareket() {
@@ -46,6 +49,27 @@ $(document).ready(function () {
             }, 50);
 
             snakeYem(yem);
+            if(game_over_duvar == false){
+                $(".game_over").show();
+
+            }
+            
+        const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
+        const yilanlar = $(".snake");   
+        const snake_s = $(yilanlar[0]);
+        const snake_s_konum = snake_s[0].getBoundingClientRect();  
+           
+        
+        if (snake_s_konum.left < left) {
+            snake_s.css({ left: width - snake_s_konum.width - 1  });
+        } else if (snake_s_konum.right > right) {
+            snake_s.css({ left : 0 });
+        } else if (snake_s_konum.top < top) {
+            snake_s.css({ top: height - snake_s_konum.height - 1  });
+        } else if (snake_s_konum.bottom > bottom) {
+            snake_s.css({ top: 0 });
+        }
+
 
     }  
 
@@ -66,3 +90,7 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+
