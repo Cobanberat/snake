@@ -18,7 +18,7 @@ $(document).ready(function () {
     }
     function snakeYem(element) {
         const snakeKonum = snake[0].getBoundingClientRect();
-        const yemKonum = element[0].getBoundingClientRect();
+        const yemKonum = element[0].getBoundingClientRect();    
         if( 
             snakeKonum.x < yemKonum.x + yemKonum.width  &&
             snakeKonum.x + snakeKonum.width > yemKonum.x &&
@@ -83,14 +83,18 @@ $(document).ready(function () {
 
 
     document.addEventListener("keydown", function (e) {
+        const tersYon = {
+            37: 39, // Sol : Sağ
+            38: 40, // Yukarı : Aşağı
+            39: 37, // Sağ : Sol
+            40: 38  // Aşağı : Yukarı
+        };
 
         if ([37, 38, 39, 40].includes(e.keyCode)) {
-            hareketYonu = e.keyCode;
-            hareketiBaslat();
+            if (hareketYonu !== tersYon[e.keyCode]) {
+                hareketYonu = e.keyCode;
+                hareketiBaslat();
+            }
         }
     });
-});
-
-
-
-
+});   
