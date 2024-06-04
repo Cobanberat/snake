@@ -120,3 +120,7 @@ $(document).ready(function () {
     
 });   
 
+function refresh() {
+    window.location.reload();
+}
+
