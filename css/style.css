@@ -60,7 +60,7 @@
     position: absolute;
     width: 15px;
     height: 15px;
-    background-color: #ffffff;
+    background: #ffffff;
 }
 .snake.head{
     background: rgb(235, 240, 235); 
@@ -104,6 +104,7 @@
     position: absolute;
     width: 15px;
     height: 15px;
+    margin-bottom: -60px;
     background: #f90; 
     box-shadow: 
     0 0 5px #f90,
