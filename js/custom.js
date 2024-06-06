@@ -3,8 +3,23 @@ $(document).ready(function () {
     hareketEdiyor = false;
     const snake = $(".snake");
     var yem = $(".yem");
+    let yon = null;
     game_over_duvar = null;
     skor = 0;
+
+    $(".left").on("click", function () {
+        yon = 37;
+    });
+    $(".right").on("click", function () {
+        yon = 39;
+    });
+    $(".up").on("click", function () {
+        yon = 38;
+    });
+    $(".down").on("click", function () {
+        yon = 40;
+    });
+
 
     function rastgeleYem(element) {
         const game_board_konum = $(".game_board")[0].getBoundingClientRect();
@@ -39,6 +54,7 @@ $(document).ready(function () {
     }
 
     function hareket() {
+
         if (hareketYonu === 37) { // Sol
             snake.css({ left: "-=15px" });
         } else if (hareketYonu === 38) { // Yukarı
@@ -48,6 +64,7 @@ $(document).ready(function () {
         } else if (hareketYonu === 40) { // Aşağı
             snake.css({ top: "+=15px" });
         }
+
         setTimeout(function () {
             requestAnimationFrame(hareket);
         }, 50);
@@ -63,14 +80,14 @@ $(document).ready(function () {
         const bas = yilanBas.getBoundingClientRect();
 
         yilanDiger.forEach(yilanDiger => {
-            const diger = yilanDiger.getBoundingClientRect(); 
+            const diger = yilanDiger.getBoundingClientRect();
             if (bas.x === diger.x && bas.y === diger.y) {
                 $(".game_over").show()
                 $(".snake").hide()
                 $(".yem").hide()
             }
         });
-       
+
 
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
@@ -114,11 +131,30 @@ $(document).ready(function () {
             if (hareketYonu !== tersYon[e.keyCode]) {
                 hareketYonu = e.keyCode;
                 hareketiBaslat();
+
             }
         }
     });
-    
-});   
+
+    $(".tuslar").click(function(){
+        const tersYon = {
+            37: 39,
+            38: 40,
+            39: 37,
+            40: 38
+        };
+        console.log(yon);
+        if ([37, 38, 39, 40].includes(yon)) {
+            if (hareketYonu !== tersYon[yon]) {
+                hareketYonu = yon;
+                hareketiBaslat();
+
+            }
+        }
+    })
+
+
+});
 
 function refresh() {
     window.location.reload();
