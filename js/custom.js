@@ -3,7 +3,7 @@ $(document).ready(function () {
     hareketEdiyor = false;
     const snake = $(".snake");
     var yem = $(".yem");
-    let yon = null;
+    var yon = null;
     game_over_duvar = null;
     skor = 0;
 
