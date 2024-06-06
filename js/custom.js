@@ -32,7 +32,7 @@ $(document).ready(function () {
 
     }
     function snakeEkle() {
-        var snakeAdd = "<div class='snake' ></div>"
+        var snakeAdd = "<div class='snake' id='snake_'></div>"
         $(".game_board").append(snakeAdd);
     }
 
@@ -79,15 +79,17 @@ $(document).ready(function () {
         const [yilanBas, ...yilanDiger] = yilanlar;
         const bas = yilanBas.getBoundingClientRect();
 
-        yilanDiger.forEach(yilanDiger => {
+        yilanDiger.forEach((yilanDiger, carpılan_yer) => {
             const diger = yilanDiger.getBoundingClientRect();
             if (bas.x === diger.x && bas.y === diger.y) {
-                $(".game_over").show()
-                $(".snake").hide()
-                $(".yem").hide()
+               var eksi = yilanlar.length - carpılan_yer-1;
+                console.log($("#snake_"));
+               for(i=0; i <= eksi; i++){
+                $(`#snake_`).remove();
+               }
+                
             }
         });
-
 
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
