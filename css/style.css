@@ -3,15 +3,17 @@
     justify-content: center;
     align-items: center;
 }
-.body{
+
+.body {
     background-color: #222738;
     color: #6e7888;
 }
-.sag{
+
+.sag {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 
@@ -62,14 +64,15 @@
     height: 15px;
     background: #ffffff;
 }
-.snake.head{
-    background: rgb(235, 240, 235); 
-    box-shadow: 
-    0 0 5px rgb(237, 242, 237),
-    0 0 10px rgb(227, 231, 227),
-    0 0 20px rgb(245, 247, 245),
-    0 0 40px rgb(231, 235, 231),
-    0 0 80px rgb(212, 216, 212);
+
+.snake.head {
+    background: rgb(235, 240, 235);
+    box-shadow:
+        0 0 5px rgb(237, 242, 237),
+        0 0 10px rgb(227, 231, 227),
+        0 0 20px rgb(245, 247, 245),
+        0 0 40px rgb(231, 235, 231),
+        0 0 80px rgb(212, 216, 212);
     border-radius: 10px;
 }
 
@@ -87,6 +90,7 @@
     font-size: 2em;
     color: red;
 }
+
 .game_over .skor {
     font-size: 2em;
     color: rgb(0, 0, 0);
@@ -100,19 +104,21 @@
     align-items: center;
     justify-content: center;
 }
+
 .yem {
     position: absolute;
     width: 15px;
     height: 15px;
     margin-bottom: -60px;
-    background: #f90; 
-    box-shadow: 
-    0 0 5px #f90,
-    0 0 10px #f90,
-    0 0 20px #f90,
-    0 0 40px #f90,
-    0 0 80px #f90;
+    background: #f90;
+    box-shadow:
+        0 0 5px #f90,
+        0 0 10px #f90,
+        0 0 20px #f90,
+        0 0 40px #f90,
+        0 0 80px #f90;
 }
+
 #ui {
     display: flex;
     align-items: center;
@@ -122,24 +128,55 @@
     height: 200px;
     justify-content: space-around;
     color: #6e7888;
-  }
-  .score_text {
+}
+
+.score_text {
     font-weight: 900;
     font-size: 15px;
     letter-spacing: 8px;
     margin-bottom: 30px;
     transform: rotate(270deg);
-  }
-  #score {
+}
+
+#score {
     margin-top: 20px;
     font-size: 30px;
     font-weight: 500;
     transform: rotate(-90deg);
-  }
-  #select_renk{
+}
+
+#select_renk {
     border: none;
     background: #181825;
     border-radius: 4px;
     color: rgb(155, 198, 235);
     width: 70px;
-  }
+}
+
+.tuslar {
+    height: 100%;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#yon {
+    width: 70%;
+display: flex;
+align-items: center;
+justify-content: space-around;
+padding: 5px;
+}
+#yon button {
+    border: 1px solid #181825;
+    background-color: #222738;
+    color: #d1d1e0 ;
+    border-radius: 4px;
+}
+#yon button:hover {
+    background-color: #252c42;
+    color: #b0b0be ;
+}
+
