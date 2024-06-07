@@ -54,6 +54,8 @@ $(document).ready(function () {
     }
 
     function hareket() {
+      
+   
 
         if (hareketYonu === 37) { // Sol
             snake.css({ left: "-=15px" });
@@ -70,27 +72,51 @@ $(document).ready(function () {
         }, 50);
 
         snakeYem(yem);
-
         const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
         const yilanlar = $(".snake");
         const snake_s = $(yilanlar[0]);
         const snake_s_konum = snake_s[0].getBoundingClientRect();
 
-        const [yilanBas, ...yilanDiger] = yilanlar;
-        const bas = yilanBas.getBoundingClientRect();
 
-        yilanDiger.forEach((yilanDiger, carpılan_yer) => {
-            const diger = yilanDiger.getBoundingClientRect();
-            if (bas.x === diger.x && bas.y === diger.y) {
-               var eksi = yilanlar.length - carpılan_yer-1;
-                console.log($("#snake_"));
-               for(i=0; i <= eksi; i++){
-                $(`#snake_`).remove();
-               }
-                
-            }
-        });
+        document.addEventListener("keydown", function(e){
+      
+            if (e.keyCode === 17) {
+                switch (hareketYonu) {
+                    case 37: 
+                        hareketYonu = 39; 
+                        break;
+                    case 38: 
+                        hareketYonu = 40;
+                        break;
+                    case 39: 
+                        hareketYonu = 37; 
+                        break;
+                    case 40:
+                        hareketYonu = 38; 
+                        break;
+                }
+            }else{
 
+            
+            const yilanlar1 = $(".snake");
+            const [yilanBas, ...yilanDiger] = yilanlar1;
+            const bas = yilanBas.getBoundingClientRect();
+
+            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
+                const diger = yilanDiger.getBoundingClientRect();
+                if (bas.x === diger.x && bas.y === diger.y) {
+                   var eksi = yilanlar1.length - carpılan_yer-1;
+                   for(i=0; i <= eksi; i++){
+                    $(`#snake_`).remove();
+                   }
+                    
+                }
+            });
+        }
+
+
+    });
+ 
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
         } else if (snake_s_konum.right > right) {
@@ -133,6 +159,7 @@ $(document).ready(function () {
             if (hareketYonu !== tersYon[e.keyCode]) {
                 hareketYonu = e.keyCode;
                 hareketiBaslat();
+                
 
             }
         }
