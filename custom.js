@@ -7,6 +7,7 @@ $(document).ready(function () {
     game_over_duvar = null;
     skor = 0;
 
+
     $(".left").on("click", function () {
         yon = 37;
     });
@@ -71,16 +72,12 @@ $(document).ready(function () {
             requestAnimationFrame(hareket);
         }, 50);
 
-        snakeYem(yem);
-        const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
-        const yilanlar = $(".snake");
-        const snake_s = $(yilanlar[0]);
-        const snake_s_konum = snake_s[0].getBoundingClientRect();
-
-
+        
         document.addEventListener("keydown", function(ve){
       
             if (ve.keyCode === 17) {
+                var ctrlKey = true;
+
                 switch (hareketYonu) {
                     case 37: 
                         hareketYonu = 39; 
@@ -95,27 +92,34 @@ $(document).ready(function () {
                         hareketYonu = 38; 
                         break;
                 }
-            }else{
-
-            
-            const yilanlar1 = $(".snake");
-            const [yilanBas, ...yilanDiger] = yilanlar1;
-            const bas = yilanBas.getBoundingClientRect();
-
-            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
-                const diger = yilanDiger.getBoundingClientRect();
-                if (bas.x === diger.x && bas.y === diger.y) {
-                   var eksi = yilanlar1.length - carpılan_yer-1;
-                   for(i=0; i <= eksi; i++){
-                    $(`#snake_`).remove();
-                   }
-                    
-                }
-            });
-        }
-
-
+            }else {
+           const ctrlKey = false;
+            }
     });
+
+        snakeYem(yem);
+        const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
+        const yilanlar = $(".snake");
+        const snake_s = $(yilanlar[0]);
+        const snake_s_konum = snake_s[0].getBoundingClientRect();
+
+
+    if(ctrlKey == false){
+        const yilanlar1 = $(".snake");
+        const [yilanBas, ...yilanDiger] = yilanlar1;
+        const bas = yilanBas.getBoundingClientRect();
+
+        yilanDiger.forEach((yilanDiger, carpılan_yer) => {
+            const diger = yilanDiger.getBoundingClientRect();
+            if (bas.x === diger.x && bas.y === diger.y) {
+               var eksi = yilanlar1.length - carpılan_yer-1;
+               for(i=0; i <= eksi; i++){
+                $(`#snake_`).remove();
+               }
+                
+            }
+        });
+    }
  
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
