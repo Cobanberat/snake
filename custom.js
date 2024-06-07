@@ -78,9 +78,9 @@ $(document).ready(function () {
         const snake_s_konum = snake_s[0].getBoundingClientRect();
 
 
-        document.addEventListener("keydown", function(e){
+        document.addEventListener("keydown", function(ve){
       
-            if (e.keyCode === 17) {
+            if (ve.keyCode === 17) {
                 switch (hareketYonu) {
                     case 37: 
                         hareketYonu = 39; 
