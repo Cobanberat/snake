@@ -53,6 +53,21 @@ $(document).ready(function () {
         }
 
     }
+    function eksilme(){
+        var yilanlar1 = $(".snake");
+            const [yilanBas, ...yilanDiger] = yilanlar1;
+            const bas = yilanBas.getBoundingClientRect();
+            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
+                const diger = yilanDiger.getBoundingClientRect();
+                if (bas.x === diger.x && bas.y === diger.y) {
+                    var eksi = yilanlar1.length - carpılan_yer - 1;
+                    for (i = 0; i <= eksi; i++) {
+                        $(`#snake_`).remove();
+                    }
+
+                }
+            });
+    }
 
     function hareket() {
 
@@ -78,32 +93,7 @@ $(document).ready(function () {
         const yilanlar = $(".snake");
         const snake_s = $(yilanlar[0]);
         const snake_s_konum = snake_s[0].getBoundingClientRect();
-
-        const tersYon = {
-            37: 39,
-            38: 40,
-            39: 37,
-            40: 38
-        };
-
-        if (hareketYonu == tersYon[hareketYonu]) {
-            const [yilanBas, ...yilanDiger] = yilanlar;
-            const bas = yilanBas.getBoundingClientRect();
-            console.log(tersYon);
-            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
-                const diger = yilanDiger.getBoundingClientRect();
-                if (bas.x === diger.x && bas.y === diger.y) {
-                    var eksi = yilanlar.length - carpılan_yer - 1;
-                    for (i = 0; i <= eksi; i++) {
-                        $(`#snake_`).remove();
-                    }
-
-                }
-            });
-        }else {
-            
-        }
-
+    
 
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
@@ -148,6 +138,7 @@ $(document).ready(function () {
             } else if (hareketYonu !== tersYon[e.keyCode]) {
                 hareketYonu = e.keyCode;
                 hareketiBaslat();
+                eksilme();
             }
         }
     });
