@@ -1,12 +1,11 @@
 $(document).ready(function () {
     var hareketYonu = null;
-    hareketEdiyor = false;
-    const snake = $(".snake");
+    var hareketEdiyor = false;
+    var snake = $(".snake");
     var yem = $(".yem");
     var yon = null;
-    game_over_duvar = null;
-    skor = 0;
-
+    var skor = 0;
+    var ctrlBasili = false;
 
     $(".left").on("click", function () {
         yon = 37;
@@ -21,7 +20,6 @@ $(document).ready(function () {
         yon = 40;
     });
 
-
     function rastgeleYem(element) {
         const game_board_konum = $(".game_board")[0].getBoundingClientRect();
         const board = game_board_konum;
@@ -30,11 +28,26 @@ $(document).ready(function () {
         const rondomX = Math.floor((Math.random() * (x + 1))) * 15;
         const rondomY = Math.floor((Math.random() * (y + 1))) * 15;
         element.css({ left: rondomX + 'px', top: rondomY + 'px' });
-
     }
+
     function snakeEkle() {
-        var snakeAdd = "<div class='snake' id='snake_'></div>"
-        $(".game_board").append(snakeAdd);
+        var oncSnakeSegment = $(".snake").last();
+        var snakeEkle = $("<div class='snake' id='snake_'></div>");
+
+        var oncLeft = parseInt(oncSnakeSegment.css('left'));
+        var oncTop = parseInt(oncSnakeSegment.css('top'));
+
+        if (hareketYonu === 37) { // Sol
+            snakeEkle.css({ left: oncLeft + 15 + 'px', top: oncTop + 'px' });
+        } else if (hareketYonu === 38) { // Yukarı
+            snakeEkle.css({ left: oncLeft + 'px', top: oncTop + 15 + 'px' });
+        } else if (hareketYonu === 39) { // Sağ
+            snakeEkle.css({ left: oncLeft - 15 + 'px', top: oncTop + 'px' });
+        } else if (hareketYonu === 40) { // Aşağı
+            snakeEkle.css({ left: oncLeft + 'px', top: oncTop - 15 + 'px' });
+        }
+
+        $(".game_board").append(snakeEkle);
     }
 
     function snakeYem(element) {
@@ -51,49 +64,52 @@ $(document).ready(function () {
             $(".skor").text(skor);
             snakeEkle();
         }
-
     }
-    function eksilme(){
-        var yilanlar1 = $(".snake");
-            const [yilanBas, ...yilanDiger] = yilanlar1;
-            const bas = yilanBas.getBoundingClientRect();
-            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
-                const diger = yilanDiger.getBoundingClientRect();
-                if (bas.x === diger.x && bas.y === diger.y) {
-                    var eksi = yilanlar1.length - carpılan_yer - 1;
-                    for (i = 0; i <= eksi; i++) {
-                        $(`#snake_`).remove();
-                    }
 
+    function eksilme() {
+        if (ctrlBasili) return; 
+        var yilanlar1 = $(".snake");
+        const bas = yilanlar1[0].getBoundingClientRect();
+        yilanlar1.each(function (yilan, segment) {
+            const diger = segment.getBoundingClientRect();
+            if (yilan !== 0 && bas.x === diger.x && bas.y === diger.y) {
+                var eksi = yilanlar1.length - yilan;
+                for (var i = 0; i < eksi; i++) {
+                    $(".snake").last().remove();
                 }
-            });
+            }
+        });
     }
 
     function hareket() {
+        var yilan = $(".snake");
 
-
+        for (let i = yilan.length - 1; i > 0; i--) {
+            $(yilan[i]).css({
+                left: $(yilan[i - 1]).css('left'),
+                top: $(yilan[i - 1]).css('top'),
+            });
+        }
 
         if (hareketYonu === 37) { // Sol
-            snake.css({ left: "-=15px" });
+            $(yilan[0]).css({ left: "-=15px" });
         } else if (hareketYonu === 38) { // Yukarı
-            snake.css({ top: "-=15px" });
+            $(yilan[0]).css({ top: "-=15px" });
         } else if (hareketYonu === 39) { // Sağ
-            snake.css({ left: "+=15px" });
+            $(yilan[0]).css({ left: "+=15px" });
         } else if (hareketYonu === 40) { // Aşağı
-            snake.css({ top: "+=15px" });
+            $(yilan[0]).css({ top: "+=15px" });
         }
 
         setTimeout(function () {
             requestAnimationFrame(hareket);
         }, 50);
 
-
         snakeYem(yem);
+        eksilme();
         const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
-        const yilanlar = $(".snake");
-        const snake_s = $(yilanlar[0]);
+        const snake_s = $(yilan[0]);
         const snake_s_konum = snake_s[0].getBoundingClientRect();
-    
 
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
@@ -104,17 +120,6 @@ $(document).ready(function () {
         } else if (snake_s_konum.bottom > bottom) {
             snake_s.css({ top: 0 });
         }
-
-        for (let i = yilanlar.length - 1; i > 0; i--) {
-            $(yilanlar[i]).css({
-                left: $(yilanlar[i - 1]).css('left'),
-                top: $(yilanlar[i - 1]).css('top'),
-                bottom: $(yilanlar[i - 1]).css('bottom'),
-                right: $(yilanlar[i - 1]).css('right')
-            });
-        }
-
-
     }
 
     function hareketiBaslat() {
@@ -125,6 +130,9 @@ $(document).ready(function () {
     }
 
     document.addEventListener("keydown", function (e) {
+        if (e.keyCode === 17) {
+            ctrlBasili = true;
+        }
         const tersYon = {
             37: 39,
             38: 40,
@@ -138,8 +146,13 @@ $(document).ready(function () {
             } else if (hareketYonu !== tersYon[e.keyCode]) {
                 hareketYonu = e.keyCode;
                 hareketiBaslat();
-                eksilme();
             }
+        }
+    });
+
+    document.addEventListener("keyup", function (e) {
+        if (e.keyCode === 17) {
+            ctrlBasili = false;
         }
     });
 
@@ -150,20 +163,18 @@ $(document).ready(function () {
             39: 37,
             40: 38
         };
-        console.log(yon);
         if ([37, 38, 39, 40].includes(yon)) {
             if (hareketYonu !== tersYon[yon]) {
                 hareketYonu = yon;
                 hareketiBaslat();
-
             }
         }
-    })
+    });
 
-
+    rastgeleYem(yem);
+    $(".skor").text(skor);
 });
 
 function refresh() {
     window.location.reload();
 }
-
