@@ -55,8 +55,8 @@ $(document).ready(function () {
     }
 
     function hareket() {
-      
-   
+
+
 
         if (hareketYonu === 37) { // Sol
             snake.css({ left: "-=15px" });
@@ -72,30 +72,6 @@ $(document).ready(function () {
             requestAnimationFrame(hareket);
         }, 50);
 
-        
-        document.addEventListener("keydown", function(ve){
-      
-            if (ve.keyCode === 17) {
-                var ctrlKey = true;
-
-                switch (hareketYonu) {
-                    case 37: 
-                        hareketYonu = 39; 
-                        break;
-                    case 38: 
-                        hareketYonu = 40;
-                        break;
-                    case 39: 
-                        hareketYonu = 37; 
-                        break;
-                    case 40:
-                        hareketYonu = 38; 
-                        break;
-                }
-            }else {
-           const ctrlKey = false;
-            }
-    });
 
         snakeYem(yem);
         const { left, right, top, bottom, width, height } = $(".game_board")[0].getBoundingClientRect();
@@ -103,24 +79,32 @@ $(document).ready(function () {
         const snake_s = $(yilanlar[0]);
         const snake_s_konum = snake_s[0].getBoundingClientRect();
 
+        const tersYon = {
+            37: 39,
+            38: 40,
+            39: 37,
+            40: 38
+        };
 
-    if(ctrlKey == false){
-        const yilanlar1 = $(".snake");
-        const [yilanBas, ...yilanDiger] = yilanlar1;
-        const bas = yilanBas.getBoundingClientRect();
+        if (hareketYonu == tersYon[hareketYonu]) {
+            const [yilanBas, ...yilanDiger] = yilanlar;
+            const bas = yilanBas.getBoundingClientRect();
+            console.log(tersYon);
+            yilanDiger.forEach((yilanDiger, carpılan_yer) => {
+                const diger = yilanDiger.getBoundingClientRect();
+                if (bas.x === diger.x && bas.y === diger.y) {
+                    var eksi = yilanlar.length - carpılan_yer - 1;
+                    for (i = 0; i <= eksi; i++) {
+                        $(`#snake_`).remove();
+                    }
 
-        yilanDiger.forEach((yilanDiger, carpılan_yer) => {
-            const diger = yilanDiger.getBoundingClientRect();
-            if (bas.x === diger.x && bas.y === diger.y) {
-               var eksi = yilanlar1.length - carpılan_yer-1;
-               for(i=0; i <= eksi; i++){
-                $(`#snake_`).remove();
-               }
-                
-            }
-        });
-    }
- 
+                }
+            });
+        }else {
+            
+        }
+
+
         if (snake_s_konum.left < left) {
             snake_s.css({ left: width - snake_s_konum.width - 1 });
         } else if (snake_s_konum.right > right) {
@@ -150,7 +134,6 @@ $(document).ready(function () {
         yem.show();
     }
 
-
     document.addEventListener("keydown", function (e) {
         const tersYon = {
             37: 39,
@@ -159,17 +142,17 @@ $(document).ready(function () {
             40: 38
         };
 
-        if ([37, 38, 39, 40].includes(e.keyCode)) {
-            if (hareketYonu !== tersYon[e.keyCode]) {
+        if ([37, 38, 39, 40, 17].includes(e.keyCode)) {
+            if (e.keyCode === 17) {
+                hareketYonu = tersYon[hareketYonu];
+            } else if (hareketYonu !== tersYon[e.keyCode]) {
                 hareketYonu = e.keyCode;
                 hareketiBaslat();
-                
-
             }
         }
     });
 
-    $(".tuslar").click(function(){
+    $(".tuslar").click(function () {
         const tersYon = {
             37: 39,
             38: 40,
