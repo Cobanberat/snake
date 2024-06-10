@@ -179,4 +179,66 @@ padding: 5px;
     background-color: #252c42;
     color: #b0b0be ;
 }
+    @media (max-width:606px) {
+            .container{
+                display: flex;
+                flex-direction: column;
+            }
+            #ui{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+                height: 60px;
+            }
+            .score_text{
+                transform: rotate(0deg);
+                display: flex;
+                margin-bottom: 0px;
+            }
+            #score{
+                transform: rotate(360deg);
+                margin-top: 0px;
+            }
+            .game_board{
+                width: 407px;
+                height: 407px;
+            }
+    }
+    @media (max-width:424px) {
+
+            #ui{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+                height: 60px;
+            }
+            .score_text{
+                transform: rotate(0deg);
+                display: flex;
+                margin-bottom: 0px;
+            }
+            #score{
+                transform: rotate(360deg);
+                margin-top: 0px;
+            }
+            .game_board{
+                width: 347px;
+                height: 347px;
+            }
+            .start{
+                display: none;
+            }
+    }
+    @media (max-width:372px) {
+
+
+
+        .game_board{
+            width: 286px;
+            height: 286px;
+        }
+
+}
 
