@@ -6,6 +6,7 @@ $(document).ready(function () {
     var yon = null;
     var skor = 0;
     var ctrlBasili = false;
+    $(".tuslar").hide();
 
     $(".left").on("click", function () {
         yon = 37;
@@ -170,6 +171,19 @@ $(document).ready(function () {
             }
         }
     });
+    $("#gamePlaySelect").on("change", function () {
+    var t = $(this).val();
+        if(t == 1){
+            $(".tuslar").show();
+            $(".text").text("Yön Tuşlarını Kullanarak Oynayabilirsiniz");
+        }else if(t == 2){
+            $(".tuslar").hide();
+            $(".text").text("");
+        }else if(t == 3){
+            $(".tuslar").hide();
+            $(".text").text("");
+        }
+    })
 
     rastgeleYem(yem);
     $(".skor").text(skor);

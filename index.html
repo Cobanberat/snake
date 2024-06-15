@@ -14,9 +14,21 @@
 <body class="body">
     <br>
     <div class="container">
+        <div class="sol">
+            <select name="gamelpay" id="gamePlaySelect">
+                <option value="10" selected>Gameplay seç</option>
+                <option value="1">Yön Tuşları</option>
+                <option value="2">Nokia 3310</option>
+                <option value="3">TouchPad</option>
+
+            </select>
+            <div class="text">
+
+            </div>
+        </div>
         <div class="sag">
             <div class="game_board" id="game_board"> <!-- oyun tahtası -->
-                <div class="snake" id="snake"></div>,
+                <div class="snake" id="snake"></div>
                 
                 <div class="game_over" style="display: none;">
                     <span class="game_over_text">Oyun Bitti</span>
@@ -25,7 +37,7 @@
                 <div class="yem" id="yem"></div>
             </div>
             <span class="start">Başlamak için aşağı yön tuşlarını kullanarak yemi alınız</span>
-
+<div class="gamePlay">
             <div class="tuslar">
                 <div class="ust" id="yon">
                     <button class="up"><i class="bi bi-arrow-up"></i></button>
@@ -39,6 +51,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <div id="ui">
             <h2 class="score_text">SCORE
