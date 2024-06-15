@@ -128,6 +128,9 @@ $(document).ready(function () {
         hareketEdiyor = true;
         hareket();
         yem.show();
+        $(".text").hide();
+        $("#gamePlaySelect").hide();
+        $(".start").hide();
     }
 
     document.addEventListener("keydown", function (e) {
