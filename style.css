@@ -190,7 +190,7 @@
     justify-content: space-evenly;
 }
 .gamePlay{
-    height: 200px;
+    height: 150px;
     width: 300px;
     display: flex;
     flex-direction: column;
@@ -202,7 +202,7 @@
     flex-direction: column;
     justify-content: space-around;
     width: 200px;
-    height: 500px;
+    height: 400px;
     align-items: stretch;
     
 }
@@ -216,6 +216,9 @@
     border-radius: 6px;
     background-color: #181825;
     color: #6e7888;
+}
+.start_div{
+    height: 30px;
 }
 
 @media (max-width:606px) {

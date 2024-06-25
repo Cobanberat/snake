@@ -4,7 +4,7 @@ $(document).ready(function () {
     var snake = $(".snake");
     var yem = $(".yem");
     var yon = null;
-    var skor = 0;
+    var skor = 1;
     var ctrlBasili = false;
     $(".tuslar").hide();
 
@@ -74,9 +74,11 @@ $(document).ready(function () {
         yilanlar1.each(function (yilan, segment) {
             const diger = segment.getBoundingClientRect();
             if (yilan !== 0 && bas.x === diger.x && bas.y === diger.y) {
-                var eksi = yilanlar1.length - yilan;
+                var eksi = yilanlar1.length - yilan +1;
+                skor = skor - eksi;
+                $(".skor").text(skor);
                 for (var i = 0; i < eksi; i++) {
-                    $(".snake").last().remove();
+                    $("#snake_").last().remove();
                 }
             }
         });
