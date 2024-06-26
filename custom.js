@@ -7,6 +7,7 @@ $(document).ready(function () {
     var skor = 1;
     var ctrlBasili = false;
     $(".tuslar").hide();
+    $(".touchPad").hide();
 
     $(".left").on("click", function () {
         yon = 37;
@@ -186,7 +187,9 @@ $(document).ready(function () {
             $(".text").text("");
         }else if(t == 3){
             $(".tuslar").hide();
+            $(".touchPad").show();
             $(".text").text("");
+            $(".text").text("Altaki daireyi sağa, sola, yukarı ve aşağı hareket ettirerek oynayabilirsiniz, Mobil için daha uygundur.");
         }
     })
 
