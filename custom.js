@@ -156,7 +156,7 @@ $(document).ready(function () {
             }
         }
     });
-    document.addEventListener("ontouch", function (e) {
+    document.addEventListener("mouseup", function (e) {
         console.log(e);
         alert("sdgsdg");
     });
