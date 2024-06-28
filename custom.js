@@ -134,8 +134,8 @@ $(document).ready(function () {
         $(".text").hide();
         $("#gamePlaySelect").hide();
         $(".start").hide();
-    }
-
+    }   
+        
     document.addEventListener("keydown", function (e) {
         if (e.keyCode === 17) {
             ctrlBasili = true;
@@ -156,13 +156,17 @@ $(document).ready(function () {
             }
         }
     });
+  
 
     document.addEventListener("keyup", function (e) {
         if (e.keyCode === 17) {
             ctrlBasili = false;
         }
+        if(e.key === "ArrowUp"){
+            console.log("cg");
+        }
     });
-
+    
     $(".tuslar").click(function () {
         const tersYon = {
             37: 39,
@@ -182,14 +186,20 @@ $(document).ready(function () {
         if(t == 1){
             $(".tuslar").show();
             $(".text").text("Yön Tuşlarını Kullanarak Oynayabilirsiniz");
+            $(".touchPad").hide();
         }else if(t == 2){
             $(".tuslar").hide();
+            $(".touchPad").hide();
             $(".text").text("");
         }else if(t == 3){
             $(".tuslar").hide();
             $(".touchPad").show();
             $(".text").text("");
             $(".text").text("Altaki daireyi sağa, sola, yukarı ve aşağı hareket ettirerek oynayabilirsiniz, Mobil için daha uygundur.");
+        }else if(t == 10){
+            $(".tuslar").hide();
+            $(".touchPad").hide();
+            $(".text").text("");
         }
     })
 
