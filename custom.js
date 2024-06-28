@@ -156,11 +156,40 @@ $(document).ready(function () {
             }
         }
     });
-    document.addEventListener("mouseup", function (e) {
-        console.log(e);
-        alert("sdgsdg");
+    const touchPad = document.querySelector('.touch');
+
+    let startX, startY;
+
+    touchPad.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        console.log(startX)
     });
 
+    touchPad.addEventListener('touchend', (e) => {
+        const endX = e.changedTouches[0].clientX;
+        const endY = e.changedTouches[0].clientY;
+        handleSwipe(startX, startY, endX, endY);
+    });
+
+    function handleSwipe(startX, startY, endX, endY) {
+        const diffX = endX - startX;
+        const diffY = endY - startY;
+
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX > 0) {
+                console.log('Right Swipe');
+            } else {
+                console.log('Left Swipe');
+            }
+        } else {
+            if (diffY > 0) {
+                console.log('Down Swipe');
+            } else {
+                console.log('Up Swipe');
+            }
+        }
+    }
     document.addEventListener("keyup", function (e) {
         if (e.keyCode === 17) {
             ctrlBasili = false;
