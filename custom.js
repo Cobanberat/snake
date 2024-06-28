@@ -156,17 +156,17 @@ $(document).ready(function () {
             }
         }
     });
-  
+    document.addEventListener("ontouch", function (e) {
+        console.log(e);
+        alert("sdgsdg");
+    });
 
     document.addEventListener("keyup", function (e) {
         if (e.keyCode === 17) {
             ctrlBasili = false;
         }
-        if(e.key === "ArrowUp"){
-            console.log("cg");
-        }
     });
-    
+
     $(".tuslar").click(function () {
         const tersYon = {
             37: 39,
