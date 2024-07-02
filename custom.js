@@ -134,9 +134,10 @@ $(document).ready(function () {
         $(".text").hide();
         $("#gamePlaySelect").hide();
         $(".start").hide();
-    }   
-        
-    document.addEventListener("keydown", function (e) {
+    }
+
+    // Yön Tuşları 
+    function yonTuslariHareketiBaslat(e) {
         if (e.keyCode === 17) {
             ctrlBasili = true;
         }
@@ -155,41 +156,33 @@ $(document).ready(function () {
                 hareketiBaslat();
             }
         }
-    });
-    const touchPad = document.querySelector('.touch');
+    }
+    // Nokia 3310 
+    function nokia3310HareketiBaslat(e) {
+        const solHareket = {
+            37: 40,
+            38: 37,
+            39: 38,
+            40: 39
+        };
+        const sagHareket = {
+            37: 38,
+            38: 39,
+            39: 40,
+            40: 37
+        };
 
-    let startX, startY;
-
-    touchPad.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        console.log(startX)
-    });
-
-    touchPad.addEventListener('touchend', (e) => {
-        const endX = e.changedTouches[0].clientX;
-        const endY = e.changedTouches[0].clientY;
-        handleSwipe(startX, startY, endX, endY);
-    });
-
-    function handleSwipe(startX, startY, endX, endY) {
-        const diffX = endX - startX;
-        const diffY = endY - startY;
-
-        if (Math.abs(diffX) > Math.abs(diffY)) {
-            if (diffX > 0) {
-                console.log('Right Swipe');
-            } else {
-                console.log('Left Swipe');
-            }
-        } else {
-            if (diffY > 0) {
-                console.log('Down Swipe');
-            } else {
-                console.log('Up Swipe');
-            }
+        if (103 === e.keyCode) {
+            hareketYonu = hareketYonu ? solHareket[hareketYonu] : 37;
+            hareketiBaslat();
+        } else if (99 === e.keyCode) {
+            hareketYonu = hareketYonu ? sagHareket[hareketYonu] : 39;
+            hareketiBaslat();
         }
     }
+    
+
+    document.addEventListener("keydown", yonTuslariHareketiBaslat);
     document.addEventListener("keyup", function (e) {
         if (e.keyCode === 17) {
             ctrlBasili = false;
@@ -210,13 +203,18 @@ $(document).ready(function () {
             }
         }
     });
+
     $("#gamePlaySelect").on("change", function () {
-    var t = $(this).val();
+        var t = $(this).val();
         if(t == 1){
+            document.addEventListener("keydown", yonTuslariHareketiBaslat);
+            document.removeEventListener("keydown", nokia3310HareketiBaslat);
             $(".tuslar").show();
             $(".text").text("Yön Tuşlarını Kullanarak Oynayabilirsiniz");
             $(".touchPad").hide();
         }else if(t == 2){
+            document.removeEventListener("keydown", yonTuslariHareketiBaslat);
+            document.addEventListener("keydown", nokia3310HareketiBaslat);
             $(".tuslar").hide();
             $(".touchPad").hide();
             $(".text").text("");
