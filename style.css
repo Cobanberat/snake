@@ -192,6 +192,7 @@
 .gamePlay{
     height: 150px;
     width: 300px;
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -220,43 +221,12 @@
 .start_div{
     height: 30px;
 }
-.touchPad{
-width: 200px;
-height: 200px;
-border: 1px solid gainsboro;
-display: flex;
-flex-direction: column;
-}
-.ust_touch{
-    height: 40px;
-    border: 1px solid gainsboro;
-}
-.alt_touch{
-    height: 40px;
-    border: 1px solid gainsboro;
-}
-.ort_touch{
-    display: flex;
-    justify-content: space-between;
+.touchs{
     width: 100%;
-    height: 70px;
-    
-}
-.touch_sol{
-    height: 70px;
-    width: 60px;
-    border: 1px solid gainsboro;
-}
-.touch_sag{
-    height: 70px;
-    width: 60px;
-    border: 1px solid gainsboro;
-}
-.touch{
-    width: 70px;
-    height: 70px;
-    background-color: #f90;
-    border-radius: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 @media (max-width:606px) {

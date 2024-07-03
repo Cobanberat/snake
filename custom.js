@@ -69,13 +69,13 @@ $(document).ready(function () {
     }
 
     function eksilme() {
-        if (ctrlBasili) return; 
+        if (ctrlBasili) return;
         var yilanlar1 = $(".snake");
         const bas = yilanlar1[0].getBoundingClientRect();
         yilanlar1.each(function (yilan, segment) {
             const diger = segment.getBoundingClientRect();
             if (yilan !== 0 && bas.x === diger.x && bas.y === diger.y) {
-                var eksi = yilanlar1.length - yilan +1;
+                var eksi = yilanlar1.length - yilan + 1;
                 skor = skor - eksi;
                 $(".skor").text(skor);
                 for (var i = 0; i < eksi; i++) {
@@ -180,7 +180,23 @@ $(document).ready(function () {
             hareketiBaslat();
         }
     }
-    
+
+
+    function touchpadHareketiBaslat() {
+        const yonTuslari = {
+            N: 38,
+            S: 40,
+            E: 39,
+            W: 37,
+        };
+
+        const yon = yonTuslari[Joy3.GetDir()] || "";
+        if ([37, 38, 39, 40].includes(yon)) {
+            hareketYonu = yon;
+            hareketiBaslat();
+        }
+    }
+
 
     document.addEventListener("keydown", yonTuslariHareketiBaslat);
     document.addEventListener("keyup", function (e) {
@@ -206,24 +222,30 @@ $(document).ready(function () {
 
     $("#gamePlaySelect").on("change", function () {
         var t = $(this).val();
-        if(t == 1){
-            document.addEventListener("keydown", yonTuslariHareketiBaslat);
+        if (t == 1) {
+            document.removeEventListener("mousemove", touchpadHareketiBaslat);
             document.removeEventListener("keydown", nokia3310HareketiBaslat);
+            document.addEventListener("keydown", yonTuslariHareketiBaslat);
             $(".tuslar").show();
             $(".text").text("Yön Tuşlarını Kullanarak Oynayabilirsiniz");
             $(".touchPad").hide();
-        }else if(t == 2){
+        } else if (t == 2) {
+            document.removeEventListener("mousemove", touchpadHareketiBaslat);
             document.removeEventListener("keydown", yonTuslariHareketiBaslat);
             document.addEventListener("keydown", nokia3310HareketiBaslat);
             $(".tuslar").hide();
             $(".touchPad").hide();
             $(".text").text("");
-        }else if(t == 3){
+            $(".text").text("numLock tuşları ile 3 ve 7 rakamlarını kullanarak oynayabilirsiniz");
+        } else if (t == 4) {
+            document.removeEventListener("keydown", yonTuslariHareketiBaslat);
+            document.removeEventListener("keydown", nokia3310HareketiBaslat);
+            document.removeEventListener("mousemove", touchpadHareketiBaslat);
+            initializeJoystick();
             $(".tuslar").hide();
-            $(".touchPad").show();
-            $(".text").text("");
-            $(".text").text("Altaki daireyi sağa, sola, yukarı ve aşağı hareket ettirerek oynayabilirsiniz, Mobil için daha uygundur.");
-        }else if(t == 10){
+            $(".touchPad").hide();
+            $(".text").text("Joystick kullanarak oynayabilirsiniz.");
+        } else if (t == 10) {
             $(".tuslar").hide();
             $(".touchPad").hide();
             $(".text").text("");
@@ -232,6 +254,43 @@ $(document).ready(function () {
 
     rastgeleYem(yem);
     $(".skor").text(skor);
+
+    function initializeJoystick() {
+        var joystick = nipplejs.create({
+            zone: document.getElementById('joystickContainer'),
+            mode: 'static',
+            position: { left: '50%', bottom: '50px' },
+            color: 'gray'
+        });
+
+        joystick.on('dir:up', function () {
+            if (hareketYonu !== 40) {
+                hareketYonu = 38;
+                hareketiBaslat();
+            }
+        });
+
+        joystick.on('dir:down', function () {
+            if (hareketYonu !== 38) {
+                hareketYonu = 40;
+                hareketiBaslat();
+            }
+        });
+
+        joystick.on('dir:left', function () {
+            if (hareketYonu !== 39) {
+                hareketYonu = 37;
+                hareketiBaslat();
+            }
+        });
+
+        joystick.on('dir:right', function () {
+            if (hareketYonu !== 37) {
+                hareketYonu = 39;
+                hareketiBaslat();
+            }
+        });
+    }
 });
 
 function refresh() {
