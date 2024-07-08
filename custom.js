@@ -157,7 +157,7 @@ $(document).ready(function () {
             }
         }
     }
-    // Nokia 3310 
+
     function nokia3310HareketiBaslat(e) {
         const solHareket = {
             37: 40,
