@@ -228,7 +228,12 @@
     justify-content: space-around;
     align-items: center;
 }
-
+@media (max-width:1200px){
+    .game_board {
+        width: 377px;
+        height: 377px;
+    }
+}
 @media (max-width:606px) {
     .container {
         display: flex;
@@ -255,7 +260,7 @@
     }
 
     .game_board {
-        width: 407px;
+        width: 497px;
         height: 407px;
     }
     .tuslar {
@@ -265,6 +270,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+    }
+    .sol{
+        justify-content: space-evenly;
+        height: 200px;
+    }
+}
+@media (max-width:507px){
+    .game_board {
+        width: 407px;
+        height: 407px;
     }
 }
 
