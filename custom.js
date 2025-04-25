@@ -52,7 +52,7 @@ $(document).ready(function () {
         $(".game_board").append(snakeEkle);
     }
 
-    function global snakeYem(element) {
+    function snakeYem(element) {
         const snakeKonum = snake[0].getBoundingClientRect();
         const yemKonum = element[0].getBoundingClientRect();
         if (
